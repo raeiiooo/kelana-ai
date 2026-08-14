@@ -1,24 +1,44 @@
-def print_trip_summary(destination, country, days, budget, currency, travel_month):
-        print("========================")
-        print("KelanaAI")
-        print("========================")
-        print(f"Destination : {destination}")
-        print(f"Country : {country}")
-        print(f"Days        : {days}")
-        print(f"Budget      : {budget}")
-        print(f"Currency       : {currency}")
-        print(f"Travel Month       : {travel_month}")
+from services.trip_service import (
+    calculate_daily_budget, 
+    get_trip_category, 
+    get_travel_season
+)
 
-# Ask the user for the details tripwh
-destination                 = input("Destination : ")
-country                     = input("Country : ")
-days                        = int(input("Days : "))
-budget                      = float(input("Budget : "))
-currency                    = input("Currency : ")
-travel_month                = input("Travel Month : ")
+def print_trip_summary(destination, days, budget, travel_month, recommended_places):
+    # Hitung nilai dari logika bisnis
+    category = get_trip_category(budget)
+    daily_budget = calculate_daily_budget(budget, days)
+    season = get_travel_season(travel_month)
 
-# # Total Estimated Cost
-# total_estimated_cost = hotel_cost + transportations_cost + food_cost + miscellaneous_cost
+    # Cetak ringkasan sesuai format tampilan target
+    print("==================================")
+    print("KelanaAI")
+    print("==================================")
+    print(f"Destination  : {destination}")
+    print(f"Days         : {days}")
+    print(f"Budget       : {int(budget)} USD")
+    print(f"Category     : {category}")
+    print(f"Daily Budget : {daily_budget} USD/Day")
+    print(f"Travel Month : {travel_month}")
+    print(f"Season : {season}")
+    print()
+    print("Recommended Places")
+    for place in recommended_places:
+        print(f"- {place}")
 
-# Print the trip summary
-print_trip_summary(destination, country, days, budget, currency, travel_month)
+# List tempat rekomendasi
+recommended_places = [
+    "Tokyo Tower",
+    "Shibuya",
+    "Mount Fuji"
+]
+
+# Mengambil masukan (input) dari pengguna
+destination  = input("Destination  : ")
+days         = int(input("Days         : "))
+budget       = float(input("Budget       : "))
+travel_month = input("Travel Month : ")
+print()
+
+# Menampilkan hasil ringkasan
+print_trip_summary(destination, days, budget, travel_month, recommended_places)

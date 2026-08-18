@@ -4,6 +4,19 @@ from services.trip_service import (
     get_travel_season
 )
 
+from fastapi import FastAPI
+app = FastAPI()
+
+@app.get("/api/v1/recommendations")
+def get_recommendations():
+    """Mengembalikan daftar rekomendasi tempat wisata."""
+    return ["Tokyo Tower", "Mount Fuji", "Shibuya"]
+
+@app.get("/api/v1/transportations")
+def get_transportations():
+    """Mengembalikan daftar pilihan moda transportasi."""
+    return ["Bus", "Train", "Flight"]
+
 def print_trip_summary(destination, days, budget, travel_month, recommended_places):
     # Hitung nilai dari logika bisnis
     category = get_trip_category(budget)
